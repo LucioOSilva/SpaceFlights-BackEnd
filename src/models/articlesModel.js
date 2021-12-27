@@ -2,25 +2,32 @@
 const connection = require('./connection');
 
 const getOneArticle = async (objSearch) => {
-  const user = await connection()
+  const articles = await connection()
     .then((db) => db.collection('articles').findOne(objSearch));
-  return user;
+  return articles;
 };
 
 const getAllArticles = async () => {
-  const users = await connection()
+  const articles = await connection()
     .then((db) => db.collection('articles').find().toArray());
-  return users;
+  return articles;
 };
 
 const putManyArticles = async (arrayOfArticles) => {
-  const users = await connection()
+  const articles = await connection()
     .then((db) => db.collection('articles').insertMany(arrayOfArticles));
-  return users;
+  return articles;
+};
+
+const deleteAllData = async () => {
+  const articles = await connection()
+    .then((db) => db.dropDatabase());
+  return articles;
 };
 
 module.exports = {
   getOneArticle,
   getAllArticles,
   putManyArticles,
+  deleteAllData,
 };
