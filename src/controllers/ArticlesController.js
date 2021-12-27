@@ -3,6 +3,6 @@ const { mdwArticles } = require('../middlewares');
 
 const articlesRouter = express.Router();
 
-articlesRouter.get('/', mdwArticles.findArticles);
+articlesRouter.get('/', mdwArticles.findArticlesBypage);
 
 module.exports = articlesRouter;

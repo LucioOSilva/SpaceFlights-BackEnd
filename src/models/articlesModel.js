@@ -13,6 +13,24 @@ const getAllArticles = async () => {
   return articles;
 };
 
+const getAllArticlesCount = async () => {
+  const articles = await connection()
+    .then((db) => db.collection('articles').count());
+  return articles;
+};
+
+const getArticlesByPage = async (page) => {
+  const numberPerPage = 10;
+  const skipNumber = page * numberPerPage;
+  const articles = await connection()
+    .then((db) => db.collection('articles')
+      .find()
+      .skip(skipNumber)
+      .limit(numberPerPage)
+      .toArray());
+  return articles;
+};
+
 const putManyArticles = async (arrayOfArticles) => {
   const articles = await connection()
     .then((db) => db.collection('articles').insertMany(arrayOfArticles));
@@ -28,6 +46,8 @@ const deleteAllData = async () => {
 module.exports = {
   getOneArticle,
   getAllArticles,
+  getAllArticlesCount,
+  getArticlesByPage,
   putManyArticles,
   deleteAllData,
 };
