@@ -1,4 +1,3 @@
-// emailService
 require('dotenv/config');
 const articlesModel = require('../models/articlesModel');
 

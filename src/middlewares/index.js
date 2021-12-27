@@ -1,4 +1,5 @@
-const mdwLogin = require('./mdwLogin');
+const mdwArticles = require('./mdwArticles');
+const mdwBase = require('./mdwBase');
 const mdwError = require('./mdwError');
 
-module.exports = { mdwLogin, mdwError };
+module.exports = { mdwArticles, mdwBase, mdwError };

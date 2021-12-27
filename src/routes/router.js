@@ -1,8 +1,10 @@
 const express = require('express');
-const LoginController = require('../controllers/LoginController');
+const ArticlesController = require('../controllers/ArticlesController');
+const BaseController = require('../controllers/BaseController');
 
 const router = express.Router();
 
-router.use('/login', LoginController);
+router.use('/', BaseController);
+router.use('/articles', ArticlesController);
 
 module.exports = router;
