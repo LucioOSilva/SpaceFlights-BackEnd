@@ -3,6 +3,6 @@ const mdw = require('../middlewares');
 
 const loginRouter = express.Router();
 
-loginRouter.get('/handshake', mdw.mdwLogin.handshake);
+loginRouter.get('/', mdw.mdwLogin.handshake);
 
 module.exports = loginRouter;
