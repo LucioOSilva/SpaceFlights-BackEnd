@@ -1,8 +1,12 @@
-const errorMiddleware = (error, _req, res) => {
+const { objectResponse, statusCode } = require('../services/statusResponse');
+
+const errorMiddleware = (error, _req, res, _next) => {
   if (error.status) {
-    return res.status(error.status).json({ message: error.message });
+    return res.status(error.status)
+      .json(objectResponse(error.status, error.message));
   }
-  return res.status(500).json({ message: `Internal server error: ${error.message}` });
+  return res.status(statusCode.internalServerError)
+    .json(objectResponse(statusCode.internalServerError, `Internal server error: ${error.message}`));
 };
 
 module.exports = { errorMiddleware };

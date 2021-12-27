@@ -6,11 +6,13 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
+    "seed": "node ./src/services/seedService",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lucio Silva",
   "license": "UNLICENSED",
   "dependencies": {
+    "axios": "^0.24.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",

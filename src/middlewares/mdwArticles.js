@@ -1,7 +1,7 @@
-const status = require('../services/statusCode');
+const { objectResponse, statusCode } = require('../services/statusResponse');
 
 const findArticles = (_req, res) => {
-  return res.status(status.OK).json({ message: 'test' });
+  return res.status(statusCode.OK).json(objectResponse(statusCode.OK, 'testing route'));
 };
 
 module.exports = {

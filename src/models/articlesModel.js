@@ -13,7 +13,14 @@ const getAllArticles = async () => {
   return users;
 };
 
+const putManyArticles = async (arrayOfArticles) => {
+  const users = await connection()
+    .then((db) => db.collection('articles').insertMany(arrayOfArticles));
+  return users;
+};
+
 module.exports = {
   getOneArticle,
   getAllArticles,
+  putManyArticles,
 };

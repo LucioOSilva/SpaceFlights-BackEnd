@@ -1,4 +1,4 @@
-const status = {
+const statusCode = {
   OK: 200,
   created: 201,
   accepted: 202,
@@ -13,4 +13,11 @@ const status = {
   internalServerError: 500,
 };
 
-module.exports = status;
+const objectResponse = (status, message, data = null) => {
+  return { status, message, data };
+};
+
+module.exports = {
+  statusCode,
+  objectResponse,
+};
