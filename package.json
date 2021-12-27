@@ -1,0 +1,11 @@
+{
+  "name": "coodesh_test_backend",
+  "version": "1.0.0",
+  "description": "Coodesh test BE app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lucio Silva",
+  "license": "UNLICENSED"
+}
