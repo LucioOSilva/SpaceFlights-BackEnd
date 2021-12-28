@@ -12,7 +12,7 @@ async function totalpages(page) {
     pageSelected,
     lastPage,
   };
-  if (pageSelected === 0 || pageSelected > lastPage) return false;
+  if (pageSelected <= 0 || pageSelected > lastPage) return false;
   return objPage;
 }
 
@@ -35,7 +35,19 @@ async function getArticlesByPage(page) {
   }
 }
 
+async function getArticleById(id) {
+  try {
+    if (verifier.isInvalidNumber(id)) throw new Error();
+    const data = await articlesModel.getOneArticle({ id: Number(id) });
+    if (!data) throw new Error();
+    return objectResponse(statusCode.OK, null, data);
+  } catch (error) {
+    return objectResponse(statusCode.badRequest, "This Article dosn't exists");
+  }
+}
+
 module.exports = {
   getOneArticle,
   getArticlesByPage,
+  getArticleById,
 };
