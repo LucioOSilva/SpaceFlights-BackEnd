@@ -41,6 +41,13 @@ const upsertManyArticles = async (arrayOfArticles) => {
   return articles;
 };
 
+const postOneArticle = async (articleDTO) => {
+  console.log('model', articleDTO);
+  const articles = await connection()
+    .then((db) => db.collection('articles').insertOne(articleDTO, { writeConcern: { w: 'majority', wtimeout: 500 } }));
+  return articles;
+};
+
 const putManyArticles = async (arrayOfArticles) => {
   const articles = await connection()
     .then((db) => db.collection('articles').insertMany(arrayOfArticles));
@@ -59,6 +66,7 @@ module.exports = {
   getAllArticlesCount,
   getArticlesByPage,
   upsertManyArticles,
+  postOneArticle,
   putManyArticles,
   deleteAllData,
 };
