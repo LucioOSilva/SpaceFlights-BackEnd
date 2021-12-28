@@ -13,7 +13,7 @@ function articlePropsValidator(props) {
   return false;
 }
 
-function articleDTO(props) {
+function articleDTOcreate(props) {
   const object = articlePropsValidator(props);
   if (object) return objectResponse(statusCode.badRequest, object);
 
@@ -33,5 +33,5 @@ function articleDTO(props) {
 }
 
 module.exports = {
-  articleDTO,
+  articleDTOcreate,
 };

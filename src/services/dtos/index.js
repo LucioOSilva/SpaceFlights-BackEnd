@@ -1,3 +1,3 @@
-const { articleDTO } = require('./articleDTO');
+const { articleDTOcreate } = require('./articleDTO');
 
-module.exports = { articleDTO };
+module.exports = { articleDTOcreate };
