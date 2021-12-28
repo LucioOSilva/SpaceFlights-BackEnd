@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
-    "seed": "node ./src/services/seedService",
+    "seed": "node ./src/services/seedService/baseSeed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lucio Silva",

@@ -31,6 +31,16 @@ const getArticlesByPage = async (page) => {
   return articles;
 };
 
+const upsertManyArticles = async (arrayOfArticles) => {
+  const articles = await connection()
+    .then((db) => {
+      arrayOfArticles.forEach((document) => {
+        db.collection('articles').updateMany({ id: document.id }, { $set: document }, { upsert: true });
+      });
+    });
+  return articles;
+};
+
 const putManyArticles = async (arrayOfArticles) => {
   const articles = await connection()
     .then((db) => db.collection('articles').insertMany(arrayOfArticles));
@@ -48,6 +58,7 @@ module.exports = {
   getAllArticles,
   getAllArticlesCount,
   getArticlesByPage,
+  upsertManyArticles,
   putManyArticles,
   deleteAllData,
 };

@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
-
-require('dotenv/config');
 const axios = require('axios').default;
 const articlesModel = require('../../models/articlesModel');
 
 async function seedDatabase() {
   try {
     const url = 'https://api.spaceflightnewsapi.net/v3/articles?_limit=100';
-    console.error('Creating Seed...'
+    console.log('Creating Seed...'
         + '\nFetching data from spaceflightnewsapi...');
     const { data } = await axios.get(url);
     console.log('Data found...'
