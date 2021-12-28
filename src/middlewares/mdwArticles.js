@@ -30,7 +30,7 @@ const postOneArticle = async (req, res, next) => {
     if (objDTO.message) throw objDTO;
     const data = await articlesService.postOneArticle(objDTO);
     if (data.message) throw data;
-    return res.status(statusCode.OK).json(data);
+    return res.status(statusCode.created).json(data);
   } catch (error) {
     next(error);
   }
