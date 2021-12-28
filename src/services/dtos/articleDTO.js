@@ -1,3 +1,4 @@
+const { v4 } = require('uuid');
 const { isAnArray, isNullOrEmpty } = require('../verifiers');
 const { objectResponse, statusCode } = require('../statusResponse');
 
@@ -17,6 +18,7 @@ function articleDTO(props) {
   if (object) return objectResponse(statusCode.badRequest, object);
 
   return {
+    id: v4(),
     title: String(props.title),
     url: String((props.url)),
     imageUrl: String(props.imageUrl),

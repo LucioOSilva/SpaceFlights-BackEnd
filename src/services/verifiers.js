@@ -14,7 +14,6 @@ function isNullOrEmpty(text) {
 
 function isAnArray(array) {
   if (Array.isArray(array)) {
-    console.log('VAI DAR CERTO!')
     return true;
   }
   return false;

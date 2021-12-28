@@ -42,7 +42,6 @@ const upsertManyArticles = async (arrayOfArticles) => {
 };
 
 const postOneArticle = async (articleDTO) => {
-  console.log('model', articleDTO);
   const articles = await connection()
     .then((db) => db.collection('articles').insertOne(articleDTO, { writeConcern: { w: 'majority', wtimeout: 500 } }));
   return articles;
