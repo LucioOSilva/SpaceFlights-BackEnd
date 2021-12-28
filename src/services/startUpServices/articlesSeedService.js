@@ -17,12 +17,17 @@ async function seedDataBaseRoutine() {
   try {
     const dayInMs = hourInMilliseconds(24);
     const dailyRunTimeTaskInMs = hourInMilliseconds(9);
-    const startTime = new Date();
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
+    const serverStartDate = new Date();
+    const endOfDayDate = new Date();
+    endOfDayDate.setHours(23, 59, 59, 999);
+    const startHourDate = new Date();
+    startHourDate.setHours(9, 0, 0, 0);
 
-    // firstTime until 9am next day
-    const firstSleepTimeMS = endOfDay - startTime + dailyRunTimeTaskInMs;
+    // firstTime until 9am next day - if server starts after 9am
+    const startMsAfter = endOfDayDate - serverStartDate + dailyRunTimeTaskInMs;
+    // firstTime until 9am next day - if server starts before 9am
+    const startMsBefore = startHourDate - serverStartDate;
+    const firstSleepTimeMS = (startMsBefore > 0) ? startMsBefore : startMsAfter;
 
     setTimeout(async () => {
       fetchData();
