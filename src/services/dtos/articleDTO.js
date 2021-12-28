@@ -27,8 +27,8 @@ function articleDTOcreate(props) {
     publishedAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     featured: false,
-    launches: Array(props.launches),
-    events: Array(props.events),
+    launches: Array.prototype.concat(props.launches),
+    events: Array.prototype.concat(props.events),
   };
 }
 
