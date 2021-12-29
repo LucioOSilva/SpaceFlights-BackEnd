@@ -70,6 +70,13 @@ const deleteAllData = async () => {
   return articles;
 };
 
+const deleteOneArticle = async (id) => {
+  const article = await getOneArticle({ id });
+  if (!article) return false;
+  await connection().then((db) => db.collection('articles').deleteOne({ id: article.id }));
+  return true;
+};
+
 module.exports = {
   getOneArticle,
   getAllArticles,
@@ -80,4 +87,5 @@ module.exports = {
   putManyArticles,
   updateOneArticle,
   deleteAllData,
+  deleteOneArticle,
 };

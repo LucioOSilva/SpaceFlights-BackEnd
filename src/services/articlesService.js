@@ -67,10 +67,21 @@ async function updateOneArticle(id, articleDTOValid) {
   }
 }
 
+async function deleteOneArticle(id) {
+  try {
+    const data = await articlesModel.deleteOneArticle(Number(id));
+    if (!data) throw new Error();
+    return objectResponse(statusCode.OK, null, { deleted: data });
+  } catch (error) {
+    return objectResponse(statusCode.badRequest, 'An error occured when the article was being deleted');
+  }
+}
+
 module.exports = {
   getOneArticle,
   getArticlesByPage,
   getArticleById,
   postOneArticle,
   updateOneArticle,
+  deleteOneArticle,
 };

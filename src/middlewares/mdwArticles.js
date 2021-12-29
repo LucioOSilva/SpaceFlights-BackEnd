@@ -48,9 +48,21 @@ const updateOneArticle = async (req, res, next) => {
   }
 };
 
+const removeOneArticle = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const data = await articlesService.deleteOneArticle(id);
+    if (data.message) throw data;
+    return res.status(data.status).json(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   findArticlesBypage,
   findArticleById,
   postOneArticle,
   updateOneArticle,
+  removeOneArticle,
 };
