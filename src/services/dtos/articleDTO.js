@@ -32,6 +32,11 @@ function articleDTOcreate(props) {
   };
 }
 
+function articleDTOkeys() {
+  return ['title', 'url', 'imageUrl', 'newsSite', 'summary', 'launches', 'events'];
+}
+
 module.exports = {
   articleDTOcreate,
+  articleDTOkeys,
 };
