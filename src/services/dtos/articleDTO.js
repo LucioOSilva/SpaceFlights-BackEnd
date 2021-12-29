@@ -18,7 +18,7 @@ function articleDTOcreate(props) {
   if (textReturn) return objectResponse(statusCode.badRequest, textReturn);
 
   /*
-    Caro avaliador, neste caso optei por instalar e utilizar um 'id' aleatório
+    Caro avaliador, neste caso optei por instalar uma lib e utilizar um 'id' aleatório
     no modelo de objeto, visto que temos uma rotina (que roda as 9am) que faz um upsert
     pegando todos 'id' recem buscados, e inserindo-os na tabela, logo
     se eu sigo o padrão id de incremento e adiciono ao database,
