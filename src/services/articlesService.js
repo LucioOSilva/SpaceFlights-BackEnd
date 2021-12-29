@@ -50,8 +50,7 @@ async function postOneArticle(articleDTO) {
   try {
     const data = await articlesModel.postOneArticle(articleDTO);
     if (!data) throw new Error();
-
-    return objectResponse(statusCode.created, null, data);
+    return objectResponse(statusCode.created, null, { id: articleDTO.id });
   } catch (error) {
     return objectResponse(statusCode.badRequest, 'An error occured when the article was being saved');
   }
