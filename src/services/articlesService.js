@@ -51,9 +51,19 @@ async function postOneArticle(articleDTO) {
     const data = await articlesModel.postOneArticle(articleDTO);
     if (!data) throw new Error();
 
-    return objectResponse(statusCode.OK, null, data);
+    return objectResponse(statusCode.created, null, data);
   } catch (error) {
     return objectResponse(statusCode.badRequest, 'An error occured when the article was being saved');
+  }
+}
+
+async function updateOneArticle(id, articleDTOValid) {
+  try {
+    const data = await articlesModel.updateOneArticle(Number(id), articleDTOValid);
+    if (!data) throw new Error();
+    return objectResponse(statusCode.OK, null, { ...data, updated: true });
+  } catch (error) {
+    return objectResponse(statusCode.badRequest, 'An error occured when the article was being updated');
   }
 }
 
@@ -62,4 +72,5 @@ module.exports = {
   getArticlesByPage,
   getArticleById,
   postOneArticle,
+  updateOneArticle,
 };

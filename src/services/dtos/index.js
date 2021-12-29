@@ -1,3 +1,6 @@
-const { articleDTOcreate } = require('./articleDTO');
+const { articleDTOcreate, articleDTOupdate } = require('./articleDTO');
 
-module.exports = { articleDTOcreate };
+module.exports = {
+  articleDTOcreate,
+  articleDTOupdate,
+};

@@ -14,8 +14,8 @@ function articlePropsValidator(props) {
 }
 
 function articleDTOcreate(props) {
-  const object = articlePropsValidator(props);
-  if (object) return objectResponse(statusCode.badRequest, object);
+  const textReturn = articlePropsValidator(props);
+  if (textReturn) return objectResponse(statusCode.badRequest, textReturn);
 
   return {
     id: v4(),
@@ -32,11 +32,19 @@ function articleDTOcreate(props) {
   };
 }
 
-function articleDTOkeys() {
-  return ['title', 'url', 'imageUrl', 'newsSite', 'summary', 'launches', 'events'];
+function articleDTOupdate(props) {
+  const articleKeys = ['title', 'url', 'imageUrl', 'newsSite', 'summary', 'launches', 'events'];
+  const propsKeys = Object.keys(props);
+
+  const result = propsKeys.find((prop) => articleKeys.find((p) => p === prop));
+  if (!result) return objectResponse(statusCode.badRequest, 'Impossible to update, verify the key property');
+  return {
+    ...props,
+    updatedAt: new Date().toISOString(),
+  };
 }
 
 module.exports = {
   articleDTOcreate,
-  articleDTOkeys,
+  articleDTOupdate,
 };

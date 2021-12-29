@@ -53,6 +53,17 @@ const putManyArticles = async (arrayOfArticles) => {
   return articles;
 };
 
+const updateOneArticle = async (id, props) => {
+  const articles = await connection()
+    .then((db) => db.collection('articles').updateOne(
+      { id },
+      { $set: { ...props } },
+      { upsert: true },
+    ))
+    .then(() => ({ id }));
+  return articles;
+};
+
 const deleteAllData = async () => {
   const articles = await connection()
     .then((db) => db.dropDatabase());
@@ -67,5 +78,6 @@ module.exports = {
   upsertManyArticles,
   postOneArticle,
   putManyArticles,
+  updateOneArticle,
   deleteAllData,
 };
