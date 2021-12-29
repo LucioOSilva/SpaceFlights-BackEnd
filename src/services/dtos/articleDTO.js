@@ -1,4 +1,3 @@
-const { v4 } = require('uuid');
 const { isAnArray, isNullOrEmpty } = require('../verifiers');
 const { objectResponse, statusCode } = require('../statusResponse');
 
@@ -17,16 +16,8 @@ function articleDTOcreate(props) {
   const textReturn = articlePropsValidator(props);
   if (textReturn) return objectResponse(statusCode.badRequest, textReturn);
 
-  /*
-    Caro avaliador, neste caso optei por instalar uma lib e utilizar um 'id' aleatório
-    no modelo de objeto, visto que temos uma rotina (que roda as 9am) que faz um upsert
-    pegando todos 'id' recem buscados, e inserindo-os na tabela, logo
-    se eu sigo o padrão id de incremento e adiciono ao database,
-    estes serão sobrescritos logo quando um novo 'article' for criado
-  */
-
   return {
-    id: v4(),
+    id: new Date().valueOf(),
     title: String(props.title),
     url: String((props.url)),
     imageUrl: String(props.imageUrl),
