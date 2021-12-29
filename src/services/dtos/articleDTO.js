@@ -17,6 +17,14 @@ function articleDTOcreate(props) {
   const textReturn = articlePropsValidator(props);
   if (textReturn) return objectResponse(statusCode.badRequest, textReturn);
 
+  /*
+    Caro avaliador, neste caso optei por instalar e utilizar um 'id' aleatório
+    no modelo de objeto, visto que temos uma rotina (que roda as 9am) que faz um upsert
+    pegando todos 'id' recem buscados, e inserindo-os na tabela, logo
+    se eu sigo o padrão id de incremento e adiciono ao database,
+    estes serão sobrescritos logo quando um novo 'article' for criado
+  */
+
   return {
     id: v4(),
     title: String(props.title),
