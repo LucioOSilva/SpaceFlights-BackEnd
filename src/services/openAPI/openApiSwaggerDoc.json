@@ -1,0 +1,513 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "description": "Coodesh test - SpaceFlightsAPI",
+      "url": "http://localhost:3333"
+    }
+  ],
+  "info": {
+    "description": "This is a simple API",
+    "version": "1.0.0",
+    "title": "Simple Inventory API",
+    "contact": {
+      "email": "lucioosilva00@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Coodesh dev requests"
+        ],
+        "summary": "handshake",
+        "operationId": "handShake",
+        "description": "handShake - \"Fullstack Challenge 2021\"\n",
+        "responses": {
+          "200": {
+            "description": "handShake",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/handShake"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
+    },
+    "/articles/": {
+      "get": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "pass a number to search page (optional)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Coodesh dev requests"
+        ],
+        "summary": "List articles",
+        "operationId": "List articles",
+        "description": "List articles - can be search by page param number\n",
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/articlesList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter or the requested page doesn't exists"
+          }
+        }
+      },
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/articlePost"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Coodesh dev requests"
+        ],
+        "summary": "Adds an article item",
+        "operationId": "Post article",
+        "description": "Adds an article to the database",
+        "responses": {
+          "201": {
+            "description": "created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/articlePostOk"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          }
+        }
+      }
+    },
+    "/articles/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of article",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Coodesh dev requests"
+        ],
+        "summary": "List one article",
+        "operationId": "List one article",
+        "description": "List one article by id\n",
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/articleGetOne"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter or the requested page doesn't exists"
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of article to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Coodesh dev requests"
+        ],
+        "summary": "Update one article",
+        "operationId": "update one article",
+        "description": "Update one article\n",
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/articlePutOk"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter or the requested page doesn't exists"
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of article to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": [
+          "Coodesh dev requests"
+        ],
+        "summary": "Delete one article",
+        "operationId": "Delete one article",
+        "description": "Delete one article\n",
+        "responses": {
+          "200": {
+            "description": "search results matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/articleDeleteOk"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter or the requested page doesn't exists"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "handShake": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": "Fullstack Challenge 2021 🏅 - Space Flight News"
+          },
+          "data": {
+            "type": "boolean",
+            "example": null
+          }
+        }
+      },
+      "article": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "format": "mongoId",
+            "example": "61cc5a340379b6381152fa6c"
+          },
+          "id": {
+            "type": "integer",
+            "example": "13454"
+          },
+          "title": {
+            "type": "string",
+            "example": "NASA probe touches the sun for the first time"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://urlpath/"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://imageurlpath/"
+          },
+          "newsSite": {
+            "type": "string",
+            "example": "Lorem ipsum dolor sit amet, consectetur adip..."
+          },
+          "summary": {
+            "type": "string",
+            "example": "Lorem ipsum dolor. Donec consequat maximus..."
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2016-08-29T09:12:33.001Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2016-08-29T09:12:33.001Z"
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "launches": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "articlePost": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "NASA probe touches the sun for the first time"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://urlpath/"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "https://imageurlpath/"
+          },
+          "newsSite": {
+            "type": "string",
+            "example": "Lorem ipsum dolor sit amet, consectetur adip..."
+          },
+          "summary": {
+            "type": "string",
+            "example": "Lorem ipsum dolor. Donec consequat maximus..."
+          },
+          "launches": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "articlePostOk": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "example": "201"
+          },
+          "message": {
+            "type": "string",
+            "example": null
+          },
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/articleId"
+          }
+        }
+      },
+      "articleId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": "13454"
+          }
+        }
+      },
+      "articleBoolean": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "boolean",
+            "example": "true"
+          }
+        }
+      },
+      "articlePut": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "The new title comes here"
+          }
+        }
+      },
+      "articlePutOk": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": null
+          },
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/articleId"
+          }
+        }
+      },
+      "articleDeleteOk": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": null
+          },
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/articleBoolean"
+          }
+        }
+      },
+      "articlesList": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": null
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "articles": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/article"
+                }
+              },
+              "pages": {
+                "$ref": "#/components/schemas/pagination"
+              }
+            }
+          }
+        }
+      },
+      "articleGetOne": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": null
+          },
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/article"
+          }
+        }
+      },
+      "pagination": {
+        "type": "object",
+        "properties": {
+          "pageSelected": {
+            "type": "integer",
+            "example": "1"
+          },
+          "lastPage": {
+            "type": "integer",
+            "example": "10"
+          }
+        }
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "format": "int64",
+            "example": "400"
+          },
+          "message": {
+            "type": "string",
+            "example": "An error happened"
+          },
+          "data": {
+            "type": "string",
+            "example": null
+          }
+        }
+      }
+    }
+  }
+}
