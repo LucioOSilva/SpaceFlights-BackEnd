@@ -44,6 +44,9 @@ Access the url to see the a request basic to api
 http://localhost:3333/
 ```
 
+### This applications was deployed on heroku
+Access ➡ [https://spaceflightsapi-a-coodesh-test.herokuapp.com/](https://spaceflightsapi-a-coodesh-test.herokuapp.com/)
+
 ## 🎯 Credits
 All thanks to [Coodesh](https://coodesh.com/) for the project and challenge
 
