@@ -174,3 +174,60 @@ describe('Teste na rota -> [GET] "/articles"', () => {
     });
   });
 });
+
+describe('Teste na rota -> [PUT] "/articles"', () => {
+  let connectionMock;
+  let response;
+  let anotherResponse;
+  const articleToPost = {
+    title: 'Arianespace flight ST37',
+    url: 'https://www.arianespace.com/',
+    imageUrl: 'https://i.imgur.com/k6GZzDO.jpeg',
+    newsSite: 'Arianespace - Mission to success',
+    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consequat maximus...',
+    launches: [],
+    events: [],
+  };
+  const putObject = { title: 'The new mission of Arianespace' };
+
+  before(async () => {
+    connectionMock = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+    response = await chai.request(server).post('/articles').send(articleToPost);
+    anotherResponse = await chai.request(server).put(`/articles/${response.body.data.id}`).send(putObject);
+  });
+
+  after(async () => {
+    connectionMock.db('test').collection('ArticlesTest').drop();
+    MongoClient.connect.restore();
+  });
+
+  describe('Verifica [PUT] se objeto retornado é objeto com título alterado', () => {
+    it('retorna o código de status 200', () => {
+      expect(anotherResponse).to.have.status(200);
+    });
+
+    it('retorna um objeto', () => {
+      expect(anotherResponse.body).to.be.a('object');
+    });
+
+    it('o objeto possui a propriedades "status", "message" e "data"', () => {
+      expect(anotherResponse.body).to.have.property('status');
+      expect(anotherResponse.body).to.have.property('message');
+      expect(anotherResponse.body).to.have.property('data');
+    });
+
+    it('a propriedade "message" deve ser "null"', () => {
+      expect(anotherResponse.body.message)
+        .to.be.equal(null);
+    });
+
+    it('a propriedade data deve ter uma propriedade "id" que se refere ao objeto atualizado', () => {
+      expect(anotherResponse.body.data).to.have.property('id');
+    });
+
+    it('a propriedade "id" deve conter um id do tipo numero', () => {
+      expect(anotherResponse.body.data.id).to.be.a('number');
+    });
+  });
+});
