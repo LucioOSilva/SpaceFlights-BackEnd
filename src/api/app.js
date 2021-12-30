@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
-const openApiSwaggerDoc = require('../services/openAPI/openApiSwaggerDoc.json');
+const openApiSwaggerDocLocal = require('../services/openAPI/openApiSwaggerDocLocal.json');
+const openApiSwaggerDocDevelopment = require('../services/openAPI/openApiSwaggerDocDevelopment.json');
 const router = require('../routes/router');
 const mdw = require('../middlewares');
 const startUpServices = require('../services/startUpServices');
@@ -12,7 +13,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use(router);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSwaggerDoc));
+app.use('/local-api-docs', swaggerUi.serve, swaggerUi.setup(openApiSwaggerDocLocal));
+app.use('/dev-api-docs', swaggerUi.serve, swaggerUi.setup(openApiSwaggerDocDevelopment));
 app.use(mdw.mdwError.errorMiddleware);
 
 startUpServices.seedDataBaseRoutine();

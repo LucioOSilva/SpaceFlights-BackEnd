@@ -37,7 +37,7 @@ changing the variable 'PORTFIXED' value;
 ## ✅ Usage
 
 After the app is running you will receive the text: "conected at port: 3333"
-open a browser tab and access the url ["http://localhost:3333/api-docs/"]() here you can find all about this application requests types and more
+open a browser tab and access the url ["http://localhost:3333/local-api-docs/"]() here you can find all about this application requests types and more
 
 Access the url to see the a request basic to api
 ```bash
@@ -45,7 +45,10 @@ http://localhost:3333/
 ```
 
 ### This applications was deployed on heroku
+- handShake main endpoint
 Access ➡ [https://spaceflightsapi-a-coodesh-test.herokuapp.com/](https://spaceflightsapi-a-coodesh-test.herokuapp.com/)
+- swagger documentation from api
+Access ➡ [https://spaceflightsapi-a-coodesh-test.herokuapp.com/dev-api-docs/](https://spaceflightsapi-a-coodesh-test.herokuapp.com/api-docs/)
 
 ## 🎯 Credits
 All thanks to [Coodesh](https://coodesh.com/) for the project and challenge
