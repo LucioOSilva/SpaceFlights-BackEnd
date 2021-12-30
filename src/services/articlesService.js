@@ -24,8 +24,12 @@ async function getOneArticle(id) {
 
 async function getArticlesByPage(page) {
   try {
-    if (verifier.isInvalidNumber(page)) throw new Error();
     const pages = await totalpages(page);
+    if (!page) {
+      return objectResponse(statusCode
+        .badRequest, `You must pass a queryparam 'page' selecting a page between 1 and ${pages.lastPage}`);
+    }
+    if (verifier.isInvalidNumber(page)) throw new Error();
     if (!pages) throw new Error();
     const data = await articlesModel.getArticlesByPage(pages.pageSelected - 1);
     const objResponse = { articles: data, pages };
