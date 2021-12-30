@@ -132,3 +132,45 @@ describe('Teste nas rotas -> [POST] "/articles" e [GET] "/articles/{id}"', () =>
     });
   });
 });
+
+describe('Teste na rota -> [GET] "/articles"', () => {
+  let connectionMock;
+  let response;
+
+  before(async () => {
+    connectionMock = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+    response = await chai.request(server).get('/articles');
+  });
+
+  after(async () => {
+    connectionMock.db('test').collection('ArticlesTest').drop();
+    MongoClient.connect.restore();
+  });
+
+  describe('Verifica listagem dos artigos publicados sem passar "page" como "queryparam"', () => {
+    it('retorna o código de status 400', () => {
+      expect(response).to.have.status(400);
+    });
+
+    it('retorna um objeto', () => {
+      expect(response.body).to.be.a('object');
+    });
+
+    it('o objeto possui a propriedades "status", "message" e "data"', () => {
+      expect(response.body).to.have.property('status');
+      expect(response.body).to.have.property('message');
+      expect(response.body).to.have.property('data');
+    });
+
+    it('a propriedade "data" deve ser "null"', () => {
+      expect(response.body.data)
+        .to.be.equal(null);
+    });
+
+    it('a propriedade "message" deve ser "You must pass a queryparam..."', () => {
+      expect(response.body.message)
+        .to.contains('You must pass a queryparam');
+    });
+  });
+});
