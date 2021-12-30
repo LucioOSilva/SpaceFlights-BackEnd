@@ -273,3 +273,59 @@ describe('Teste nas rotas -> [PUT] "/articles" e [GET] "/articles?page=1"', () =
     });
   });
 });
+
+describe('Teste nas rotas -> [DELETE] "/articles" e [GET] "/articles?page=1"', () => {
+  let connectionMock;
+  let response;
+  let deleteResponse;
+  const articleToPost = {
+    title: 'Esa new missions',
+    url: 'https://www.esa.int/',
+    imageUrl: 'https://i.imgur.com/3MAEcxw.jpeg',
+    newsSite: 'atlantis mission',
+    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consequat maximus...',
+    launches: [],
+    events: [],
+  };
+
+  before(async () => {
+    connectionMock = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+    response = await chai.request(server).post('/articles').send(articleToPost);
+    deleteResponse = await chai.request(server).delete(`/articles/${response.body.data.id}`);
+  });
+
+  after(async () => {
+    connectionMock.db('test').collection('ArticlesTest').drop();
+    MongoClient.connect.restore();
+  });
+
+  describe('Verifica [DELETE] se objeto retornado é objeto com título alterado', () => {
+    it('retorna o código de status 200', () => {
+      expect(deleteResponse).to.have.status(200);
+    });
+
+    it('retorna um objeto', () => {
+      expect(deleteResponse.body).to.be.a('object');
+    });
+
+    it('o objeto possui a propriedades "status", "message" e "data"', () => {
+      expect(deleteResponse.body).to.have.property('status');
+      expect(deleteResponse.body).to.have.property('message');
+      expect(deleteResponse.body).to.have.property('data');
+    });
+
+    it('a propriedade "message" deve ser "null"', () => {
+      expect(deleteResponse.body.message)
+        .to.be.equal(null);
+    });
+
+    it('a propriedade data deve ter uma propriedade "deleted" que se refere ao objeto deletado', () => {
+      expect(deleteResponse.body.data).to.have.property('deleted');
+    });
+
+    it('a propriedade "deleted" deve ser do tipo boolean', () => {
+      expect(deleteResponse.body.data.deleted).to.be.a('boolean');
+    });
+  });
+});
