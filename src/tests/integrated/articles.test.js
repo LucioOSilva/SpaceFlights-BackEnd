@@ -148,7 +148,7 @@ describe('Teste na rota -> [GET] "/articles"', () => {
     MongoClient.connect.restore();
   });
 
-  describe('Verifica listagem dos artigos publicados sem passar "page" como "queryparam"', () => {
+  describe('Verifica [GET] listagem dos artigos publicados sem passar "page" como "queryparam"', () => {
     it('retorna o código de status 400', () => {
       expect(response).to.have.status(400);
     });
@@ -175,10 +175,11 @@ describe('Teste na rota -> [GET] "/articles"', () => {
   });
 });
 
-describe('Teste na rota -> [PUT] "/articles"', () => {
+describe('Teste nas rotas -> [PUT] "/articles" e [GET] "/articles?page=1"', () => {
   let connectionMock;
   let response;
   let anotherResponse;
+  let articlesResponse;
   const articleToPost = {
     title: 'Arianespace flight ST37',
     url: 'https://www.arianespace.com/',
@@ -195,6 +196,7 @@ describe('Teste na rota -> [PUT] "/articles"', () => {
     sinon.stub(MongoClient, 'connect').resolves(connectionMock);
     response = await chai.request(server).post('/articles').send(articleToPost);
     anotherResponse = await chai.request(server).put(`/articles/${response.body.data.id}`).send(putObject);
+    articlesResponse = await chai.request(server).get('/articles?page=1');
   });
 
   after(async () => {
@@ -228,6 +230,46 @@ describe('Teste na rota -> [PUT] "/articles"', () => {
 
     it('a propriedade "id" deve conter um id do tipo numero', () => {
       expect(anotherResponse.body.data.id).to.be.a('number');
+    });
+  });
+
+  describe('Verifica [GET] se listagem de artigos é retornada', () => {
+    it('retorna o código de status 200', () => {
+      expect(articlesResponse).to.have.status(200);
+    });
+
+    it('retorna um objeto', () => {
+      expect(articlesResponse.body).to.be.a('object');
+    });
+
+    it('o objeto possui a propriedades "status", "message" e "data"', () => {
+      expect(articlesResponse.body).to.have.property('status');
+      expect(articlesResponse.body).to.have.property('message');
+      expect(articlesResponse.body).to.have.property('data');
+    });
+
+    it('a propriedade "message" deve ser "null"', () => {
+      expect(articlesResponse.body.message)
+        .to.be.equal(null);
+    });
+
+    it('a propriedade data deve ter um array de artigos retornados e numeração de paginas', () => {
+      expect(articlesResponse.body.data).to.have.property('articles');
+      expect(articlesResponse.body.data).to.have.property('pages');
+    });
+
+    it('o array de artigos retornados deve ter comprimento de tamanho 1', () => {
+      expect(articlesResponse.body.data.articles.length).to.be.equal(1);
+    });
+
+    it('verifica se a paginação retornada contém "pageSelected" e "lastPage"', () => {
+      expect(articlesResponse.body.data.pages).to.have.property('pageSelected');
+      expect(articlesResponse.body.data.pages).to.have.property('lastPage');
+    });
+
+    it('verifica se a paginação retornada em "pageSelected" e "lastPage" está correta', () => {
+      expect(articlesResponse.body.data.pages.pageSelected).to.be.equal(1);
+      expect(articlesResponse.body.data.pages.lastPage).to.be.equal(1);
     });
   });
 });
