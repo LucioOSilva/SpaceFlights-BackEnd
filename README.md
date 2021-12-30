@@ -13,7 +13,7 @@ After clone this repository, (git clone 'this'), open the terminal to use npm (s
 ```bash
 npm install
 ```
-This will intall all dependencies of this application
+This will install all dependencies of this application
 
 ```bash
 npm run seed
@@ -27,7 +27,7 @@ npm run dev
 
 ```bash
 npm start
-This command will run the app
+# This command will run the app
 ```
 #
 #### 🟨 Warning
