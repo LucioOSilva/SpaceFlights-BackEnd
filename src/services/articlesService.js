@@ -24,22 +24,17 @@ async function getOneArticle(id) {
 
 async function getArticlesByPage(page) {
   try {
-    console.log('CHEGUEI', page);
     const pages = await totalpages(page);
     if (!page) {
       return objectResponse(statusCode
         .badRequest, `You must pass a queryparam 'page' selecting a page between 1 and ${pages.lastPage}`);
     }
-    console.log('passei 1');
     if (verifier.isInvalidNumber(page)) throw new Error();
-    console.log('passei 2');
     if (!pages) throw new Error();
-    console.log('passei 3');
     const data = await articlesModel.getArticlesByPage(pages.pageSelected - 1);
     const objResponse = { articles: data, pages };
     return objectResponse(statusCode.OK, null, objResponse);
   } catch (error) {
-    console.log(error.message);
     return objectResponse(statusCode.badRequest, "The requested page doesn't exists");
   }
 }
