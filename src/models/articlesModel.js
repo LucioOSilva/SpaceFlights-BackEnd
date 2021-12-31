@@ -1,20 +1,20 @@
-// usersModel
-const connection = require('./connection');
+// articlesModel
+const connectionHandler = require('./connectionHandler');
 
 const getOneArticle = async (objSearch) => {
-  const articles = await connection()
+  const articles = await connectionHandler()
     .then((db) => db.collection('articles').findOne(objSearch));
   return articles;
 };
 
 const getAllArticles = async () => {
-  const articles = await connection()
+  const articles = await connectionHandler()
     .then((db) => db.collection('articles').find().toArray());
   return articles;
 };
 
 const getAllArticlesCount = async () => {
-  const articles = await connection()
+  const articles = await connectionHandler()
     .then((db) => db.collection('articles').count());
   return articles;
 };
@@ -22,7 +22,7 @@ const getAllArticlesCount = async () => {
 const getArticlesByPage = async (page) => {
   const numberPerPage = 10;
   const skipNumber = page * numberPerPage;
-  const articles = await connection()
+  const articles = await connectionHandler()
     .then((db) => db.collection('articles')
       .find()
       .skip(skipNumber)
@@ -32,7 +32,7 @@ const getArticlesByPage = async (page) => {
 };
 
 const upsertManyArticles = async (arrayOfArticles) => {
-  const articles = await connection()
+  const articles = await connectionHandler()
     .then((db) => {
       arrayOfArticles.forEach((document) => {
         db.collection('articles').updateMany({ id: document.id }, { $set: document }, { upsert: true });
@@ -42,19 +42,19 @@ const upsertManyArticles = async (arrayOfArticles) => {
 };
 
 const postOneArticle = async (articleDTO) => {
-  const articles = await connection()
+  const articles = await connectionHandler()
     .then((db) => db.collection('articles').insertOne(articleDTO, { writeConcern: { w: 'majority', wtimeout: 500 } }));
   return articles;
 };
 
 const putManyArticles = async (arrayOfArticles) => {
-  const articles = await connection()
+  const articles = await connectionHandler()
     .then((db) => db.collection('articles').insertMany(arrayOfArticles));
   return articles;
 };
 
 const updateOneArticle = async (id, props) => {
-  const articles = await connection()
+  const articles = await connectionHandler()
     .then((db) => db.collection('articles').updateOne(
       { id },
       { $set: { ...props } },
@@ -65,7 +65,7 @@ const updateOneArticle = async (id, props) => {
 };
 
 const deleteAllData = async () => {
-  const articles = await connection()
+  const articles = await connectionHandler()
     .then((db) => db.dropDatabase());
   return articles;
 };
@@ -73,7 +73,7 @@ const deleteAllData = async () => {
 const deleteOneArticle = async (id) => {
   const article = await getOneArticle({ id });
   if (!article) return false;
-  await connection().then((db) => db.collection('articles').deleteOne({ id: article.id }));
+  await connectionHandler().then((db) => db.collection('articles').deleteOne({ id: article.id }));
   return true;
 };
 
