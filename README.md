@@ -48,7 +48,7 @@ http://localhost:3333/
 - handShake main endpoint
 Access ➡ [https://spaceflightsapi-a-coodesh-test.herokuapp.com/](https://spaceflightsapi-a-coodesh-test.herokuapp.com/)
 - swagger documentation from api
-Access ➡ [https://spaceflightsapi-a-coodesh-test.herokuapp.com/dev-api-docs/](https://spaceflightsapi-a-coodesh-test.herokuapp.com/api-docs/)
+Access ➡ [https://spaceflightsapi-a-coodesh-test.herokuapp.com/dev-api-docs/](https://spaceflightsapi-a-coodesh-test.herokuapp.com/dev-api-docs/)
 
 ## 🎯 Credits
 All thanks to [Coodesh](https://coodesh.com/) for the project and challenge
